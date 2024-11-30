@@ -19,7 +19,7 @@ contract TokenHelPetTest is Test {
 
 
     function setUp() public {
-        token = HelPetToken(0x6aDBd13cF9E403E0e6B80226810905a64d2B29fE);
+        token = HelPetToken(0x21204D760494c31fe869A8AA97389bf35d426866);
     }
 
     // ------------------------------------- Mint ----------------------------------- 
