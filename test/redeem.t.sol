@@ -9,7 +9,7 @@ import {Redeem} from "../src/redeem.sol";
  * forge test -vvvv --match-path test/redeem.t.sol --fork-url https://sepolia.basescan.org
  * 
  * @dev Contract deployed on Base Sepolia
- * https://sepolia.basescan.org/address/0x5fF76F1e069F2CE71c49aF3254CBC4d95123a0CB
+ * https://sepolia.basescan.org/address/0x8D94F785E28657400d31b2cc3a68404Cd8557B6A
 */
 
 contract RedeemTest is Test {
@@ -20,7 +20,7 @@ contract RedeemTest is Test {
     address constant entity1 = 0x9b63FA365019Dd7bdF8cBED2823480F808391970;
 
     function setUp() public {
-        redeem = Redeem(0x5fF76F1e069F2CE71c49aF3254CBC4d95123a0CB);
+        redeem = Redeem(0x8D94F785E28657400d31b2cc3a68404Cd8557B6A);
     }
 
     // ----------------------------------- Create post ----------------------------------- 
