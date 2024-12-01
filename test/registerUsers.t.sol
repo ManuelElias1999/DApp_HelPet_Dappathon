@@ -9,7 +9,7 @@ import {RegisterUsers} from "../src/registerUsers.sol";
  * forge test -vvvv --match-path test/registerUsers.t.sol --fork-url https://sepolia.basescan.org
  * 
  * @dev Contract deployed on Base Sepolia
- * https://sepolia.basescan.org/address/0x3D832fF79eab5783D933d348CB5C6e54bf41c600
+ * https://sepolia.basescan.org/address/0x3D832fF79eab5783D933d348CB5C6e54bf41c600#code
 */
 
 contract RegisterUsersTest is Test {

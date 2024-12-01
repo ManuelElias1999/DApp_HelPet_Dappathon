@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 /**
  * @dev Contract deployed on Taiko Hekla
  * @notice You can view the deployed contract at:
- * https://sepolia.basescan.org/address/0x21204D760494c31fe869A8AA97389bf35d426866
+ * https://sepolia.basescan.org/address/0x21204D760494c31fe869A8AA97389bf35d426866#code
 */
 
 contract HelPetToken is ERC20, Ownable {

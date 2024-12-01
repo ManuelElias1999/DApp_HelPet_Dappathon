@@ -57,5 +57,4 @@ contract FindPetTest is Test {
         findPet.closePost(0, user2);
         vm.stopPrank();
     }
-    
 }

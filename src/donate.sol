@@ -9,7 +9,7 @@ import "./tokenHelPet.sol";
 /**
  * @dev Contract deployed on Base Sepolia
  * @notice You can view the deployed contract at:
- * https://sepolia.basescan.org/address/0xa6C05211B3331167f92A1C53f18b999Ee15Fa20d
+ * https://sepolia.basescan.org/address/0xa6C05211B3331167f92A1C53f18b999Ee15Fa20d#code
 */
 
 contract Donate is Ownable {

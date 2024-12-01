@@ -9,7 +9,7 @@ import "./tokenHelPet.sol";
 /**
  * @dev Contract deployed on Base Sepolia
  * @notice You can view the deployed contract at:
- * https://sepolia.basescan.org/address/0x8D94F785E28657400d31b2cc3a68404Cd8557B6A
+ * https://sepolia.basescan.org/address/0x8D94F785E28657400d31b2cc3a68404Cd8557B6A#code
 */
 
 contract Redeem is Ownable {
@@ -146,5 +146,4 @@ contract Redeem is Ownable {
         
         emit ItemRedeemed(_postId, msg.sender);
     }
-    
 }

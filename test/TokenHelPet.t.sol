@@ -9,7 +9,7 @@ import {HelPetToken} from "../src/tokenHelPet.sol";
  * forge test -vvvv --match-path test/tokenHelPet.t.sol --fork-url https://sepolia.basescan.org
  * 
  * @dev Contract deployed on Base Sepolia
- * https://sepolia.basescan.org/address/0x21204D760494c31fe869A8AA97389bf35d426866
+ * https://sepolia.basescan.org/address/0x21204D760494c31fe869A8AA97389bf35d426866#code
 */
 
 contract TokenHelPetTest is Test {

@@ -9,7 +9,7 @@ import {Redeem} from "../src/redeem.sol";
  * forge test -vvvv --match-path test/redeem.t.sol --fork-url https://sepolia.basescan.org
  * 
  * @dev Contract deployed on Base Sepolia
- * https://sepolia.basescan.org/address/0x8D94F785E28657400d31b2cc3a68404Cd8557B6A
+ * https://sepolia.basescan.org/address/0x8D94F785E28657400d31b2cc3a68404Cd8557B6A#code
 */
 
 contract RedeemTest is Test {

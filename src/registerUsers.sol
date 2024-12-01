@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 /**
  * @dev Contract deployed on Base Sepolia
  * @notice You can view the deployed contract at:
- * https://sepolia.basescan.org/address/0x3D832fF79eab5783D933d348CB5C6e54bf41c600
+ * https://sepolia.basescan.org/address/0x3D832fF79eab5783D933d348CB5C6e54bf41c600#code
 */
 
 contract RegisterUsers is Ownable {

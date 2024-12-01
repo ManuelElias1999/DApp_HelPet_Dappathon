@@ -9,7 +9,7 @@ import "./tokenHelPet.sol";
 /**
  * @dev Contract deployed on Base Sepolia
  * @notice You can view the deployed contract at:
- * https://sepolia.basescan.org/address/0x22b15F336927ED999D80e14d51046391FF8ACbfa
+ * https://sepolia.basescan.org/address/0x22b15F336927ED999D80e14d51046391FF8ACbfa#code
 */
 
 contract FindPet is Ownable {

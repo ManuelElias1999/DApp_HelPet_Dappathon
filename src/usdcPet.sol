@@ -4,7 +4,7 @@ pragma solidity ^0.8.26;
 /**
  * @dev Contract deployed on Base Sepolia
  * @notice You can view the deployed contract at:
- * https://sepolia.basescan.org/address/0x1dfe0B41dDebe308B6096D32a0c404b2d835C6Ce
+ * https://sepolia.basescan.org/address/0x1dfe0B41dDebe308B6096D32a0c404b2d835C6Ce#code
 */
 
 contract USDCPet {
