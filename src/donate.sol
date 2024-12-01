@@ -9,10 +9,10 @@ import "./tokenHelPet.sol";
 /**
  * @dev Contract deployed on Base Sepolia
  * @notice You can view the deployed contract at:
- * https://sepolia.basescan.org/address/0x22b15F336927ED999D80e14d51046391FF8ACbfa
+ * https://sepolia.basescan.org/address/0xa6C05211B3331167f92A1C53f18b999Ee15Fa20d
 */
 
-contract FindPet is Ownable {
+contract Donate is Ownable {
     
     // Counter for post IDs
     uint256 private postIdCounter = 0;
@@ -26,8 +26,10 @@ contract FindPet is Ownable {
     // Struct to store post information
     struct Post {
         address creator;
-        uint256 amount;
+        uint256 targetAmount;
+        uint256 currentAmount;
         bool isOpen;
+        string description;
     }
 
     // Mapping from post ID to Post struct
@@ -36,24 +38,21 @@ contract FindPet is Ownable {
     mapping(address => bool) private agents;
 
     // Events
-    event PostCreated(uint256 indexed postId, address indexed creator, uint256 amount);
-    event PostClosed(uint256 indexed postId, address indexed beneficiary, uint256 amount);
-    
+    event PostCreated(uint256 indexed postId, address indexed creator, uint256 targetAmount, string description);
+    event PostClosed(uint256 indexed postId);
+    event DonationReceived(uint256 indexed postId, address indexed donor, uint256 amount);
+    event AgentAdded(address indexed agent);
+    event AgentRemoved(address indexed agent);
+
     // Reference to other contracts
     RegisterUsers public registerUsers;
     HelPetToken public tokenHelPet;
     IERC20 public usdc;
 
-    // Events
-    event AgentAdded(address indexed agent);
-    event AgentRemoved(address indexed agent);
-    event DonationReceived(address indexed donor, uint256 amount);
-    event DonationProcessed(address indexed donor, uint256 amount, uint256 tokens);
-
     /**
      * @dev Constructor initializes the contract with references to other contracts
      * @param _registerUsers Address of the RegisterUsers contract
-     * @param _tokenHelPet Address of the TokenHelPet contract
+     * @param _tokenHelPet Address of the HelPetToken contract
      */
     constructor(address _registerUsers, address _tokenHelPet) Ownable(msg.sender) {
         require(_registerUsers != address(0), "Invalid RegisterUsers address");
@@ -101,41 +100,32 @@ contract FindPet is Ownable {
     }
 
     /**
-     * @dev Creates a new post with a reward amount
-     * @param _amount Amount of USDC for the reward
+     * @dev Creates a new donation post
+     * @param _targetAmount Target amount for the donation in USDC
+     * @param _description Description of the donation purpose
      */
-    function createPost(uint256 _amount) external {
-        // Check if sender is registered user or entity
-        require(
-            registerUsers.isRegisteredUser(msg.sender) || 
-            registerUsers.isRegisteredEntity(msg.sender),
-            "Must be registered user or entity"
-        );
-        require(_amount > 0, "Amount must be greater than 0");
+    function createDonationPost(uint256 _targetAmount, string memory _description) external {
+        require(registerUsers.isRegisteredEntity(msg.sender), "Only registered entities can create posts");
+        require(_targetAmount > 0, "Target amount must be greater than 0");
+        require(bytes(_description).length > 0, "Description cannot be empty");
 
-        // Transfer USDC from sender to contract
-        require(
-            usdc.transferFrom(msg.sender, address(this), _amount),
-            "USDC transfer failed"
-        );
-
-        // Create new post
         uint256 postId = postIdCounter++;
         posts[postId] = Post({
             creator: msg.sender,
-            amount: _amount,
-            isOpen: true
+            targetAmount: _targetAmount,
+            currentAmount: 0,
+            isOpen: true,
+            description: _description
         });
 
-        emit PostCreated(postId, msg.sender, _amount);
+        emit PostCreated(postId, msg.sender, _targetAmount, _description);
     }
 
     /**
-     * @dev Closes a post and distributes the reward
+     * @dev Closes a donation post
      * @param _postId ID of the post to close
-     * @param _beneficiary Address to receive the reward
      */
-    function closePost(uint256 _postId, address _beneficiary) external {
+    function closePost(uint256 _postId) external {
         require(_postId < postIdCounter, "Post does not exist");
         Post storage post = posts[_postId];
         require(post.isOpen, "Post is already closed");
@@ -143,42 +133,46 @@ contract FindPet is Ownable {
             msg.sender == post.creator || agents[msg.sender],
             "Only creator or agent can close post"
         );
-        require(_beneficiary != address(0), "Invalid beneficiary address");
 
         post.isOpen = false;
-
-        // Calculate amounts
-        uint256 beneficiaryAmount = (post.amount * 97) / 100;
-        uint256 ownerAmount = post.amount - beneficiaryAmount;
-
-        // Transfer rewards in USDC from this contract
-        require(
-            usdc.transferFrom(address(this), _beneficiary, beneficiaryAmount),
-            "Beneficiary USDC transfer failed"
-        );
-        require(
-            usdc.transferFrom(address(this), owner(), ownerAmount),
-            "Owner USDC transfer failed"
-        );
-
-        // Mint HelPet tokens to beneficiary
-        tokenHelPet.mint(_beneficiary, 50);
-
-        emit PostClosed(_postId, _beneficiary, post.amount);
+        emit PostClosed(_postId);
     }
 
     /**
-     * @dev Returns post information
-     * @param _postId ID of the post
+     * @dev Allows users to donate to a specific post
+     * @param _postId ID of the post to donate to
+     * @param _amount Amount to donate in USDC
      */
-    function getPost(uint256 _postId) external view returns (
-        address creator,
-        uint256 amount,
-        bool isOpen
-    ) {
+    function donateToPost(uint256 _postId, uint256 _amount) external {
+        require(
+            registerUsers.isRegisteredUser(msg.sender) || 
+            registerUsers.isRegisteredEntity(msg.sender),
+            "Must be registered user or entity"
+        );
         require(_postId < postIdCounter, "Post does not exist");
+        require(_amount > 0, "Amount must be greater than 0");
+        
         Post storage post = posts[_postId];
-        return (post.creator, post.amount, post.isOpen);
+        require(post.isOpen, "Post is closed");
+
+        uint256 creatorAmount = (_amount * 99) / 100;
+        uint256 ownerAmount = _amount - creatorAmount;
+
+        require(
+            usdc.transferFrom(msg.sender, post.creator, creatorAmount),
+            "Creator transfer failed"
+        );
+        require(
+            usdc.transferFrom(msg.sender, owner(), ownerAmount),
+            "Owner transfer failed"
+        );
+
+        post.currentAmount += _amount;
+        
+        // Mint HelPet tokens to donor
+        tokenHelPet.mint(msg.sender, 50);
+        
+        emit DonationReceived(_postId, msg.sender, _amount);
     }
 
 }

@@ -2,7 +2,7 @@
 pragma solidity ^0.8.26;
 
 import {Test, console} from "forge-std/Test.sol";
-import {HelPetToken} from "../src/TokenHelPet.sol";
+import {HelPetToken} from "../src/tokenHelPet.sol";
 
 /**
  * To run this contract, copy and paste this command in the terminal:

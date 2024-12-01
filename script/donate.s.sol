@@ -2,18 +2,18 @@
 pragma solidity ^0.8.26;
 
 import {Script, console} from "forge-std/Script.sol";
-import {FindPet} from "../src/findPet.sol";
+import {Donate} from "../src/donate.sol";
 import {RegisterUsers} from "../src/registerUsers.sol";
 import {HelPetToken} from "../src/tokenHelPet.sol";
 
 /**
- * @title FindPetScript
- * @dev Deployment script for FindPet contract
+ * @title DonateScript
+ * @dev Deployment script for Donate contract
  */
 
-contract FindPetScript is Script {
+contract DonateScript is Script {
     // Contract instances
-    FindPet public findPet;
+    Donate public donate;
     RegisterUsers public registerUsers;
     HelPetToken public tokenHelPet;
     // Address that will be set as owner and agent
@@ -28,7 +28,7 @@ contract FindPetScript is Script {
 
     /**
      * @dev Main deployment function
-     * Deploys FindPet contract and sets up initial configuration
+     * Deploys Donate contract and sets up initial configuration
      */
     function run() public {
         vm.startBroadcast();
@@ -37,11 +37,11 @@ contract FindPetScript is Script {
         registerUsers = new RegisterUsers();
         tokenHelPet = new HelPetToken("HelPet", "HPET");
 
-        // Deploy FindPet with dependencies
-        findPet = new FindPet(address(registerUsers), address(tokenHelPet));
+        // Deploy Donate with dependencies
+        donate = new Donate(address(registerUsers), address(tokenHelPet));
         
         // Set up initial agents
-        findPet.addAgent(owner);
+        donate.addAgent(owner);
         registerUsers.addAgent(owner);
         tokenHelPet.addAgent(owner);
 
