@@ -30,8 +30,8 @@ contract TokenHelPetScript is Script {
     function run() public {
         vm.startBroadcast();
 
-        // Deploy new token contract with name "PetScan Token" and symbol "PST"
-        token = new HelPetToken("PetScan Token", "PST");
+        // Deploy new token contract with name "HelPet" and symbol "HPET"
+        token = new HelPetToken("HelPet", "HPET");
         // Add deployer as an agent
         token.addAgent(owner);
 
