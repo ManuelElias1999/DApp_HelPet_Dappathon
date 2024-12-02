@@ -24,6 +24,13 @@ The platform consists of four main smart contracts deployed on Base Sepolia test
 - Users can report found pets
 - Manages lost and found pet listings
 
+### Donate Contract
+**Address**: [0x1234567890123456789012345678901234567890](https://sepolia.basescan.org/address/0xa6C05211B3331167f92A1C53f18b999Ee15Fa20d)
+- Manages donations to animal shelters
+- Mints HelPet tokens as rewards for donors
+- Tracks donation history and statistics
+- Allows entities to create donation campaigns
+
 ### Redeem Contract
 **Address**: [0x8D94F785E28657400d31b2cc3a68404Cd8557B6A](https://sepolia.basescan.org/address/0x8D94F785E28657400d31b2cc3a68404Cd8557B6A)
 - Allows entities to create redemption posts for items/services
