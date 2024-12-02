@@ -1,66 +1,50 @@
-## Foundry
+# HelPet Platform
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+HelPet is a decentralized platform that connects animal shelters with donors through blockchain technology, enabling transparent and efficient donations while rewarding contributors with tokens.
 
-Foundry consists of:
+## Smart Contracts
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+The platform consists of four main smart contracts deployed on Base Sepolia testnet:
 
-## Documentation
+### TokenHelPet Contract
+**Address**: [0x21204D760494c31fe869A8AA97389bf35d426866](https://sepolia.basescan.org/address/0x21204D760494c31fe869A8AA97389bf35d426866)
+- ERC20 token used as reward for donations
+- Minted when users donate to causes
+- Can be redeemed for items/services
 
-https://book.getfoundry.sh/
+### RegisterUsers Contract
+**Address**: [0x3D832fF79eab5783D933d348CB5C6e54bf41c600](https://sepolia.basescan.org/address/0x3D832fF79eab5783D933d348CB5C6e54bf41c600)
+- Manages user and entity registration
+- Only owner can register new users/entities
+- Maintains registry of verified users and animal shelters
 
-## Usage
+### FindPet Contract
+**Address**: [0x22b15F336927ED999D80e14d51046391FF8ACbfa](https://sepolia.basescan.org/address/0x22b15F336927ED999D80e14d51046391FF8ACbfa)
+- Allows entities to post lost pets
+- Users can report found pets
+- Manages lost and found pet listings
 
-### Build
+### Redeem Contract
+**Address**: [0x8D94F785E28657400d31b2cc3a68404Cd8557B6A](https://sepolia.basescan.org/address/0x8D94F785E28657400d31b2cc3a68404Cd8557B6A)
+- Allows entities to create redemption posts for items/services
+- Users can redeem items using their HelPet tokens
+- Manages inventory and token transfers
+- Posts can be closed by creators
 
-```shell
-$ forge build
-```
+## Technologies Used
 
-### Test
+- **Solidity**: Smart contract development
+- **Foundry**: Testing framework and development environment
+- **Base**: Layer 2 scaling solution
+- **OpenZeppelin**: Smart contract security standards
 
-```shell
-$ forge test
-```
+## Testing
 
-### Format
+Each contract has its own test file with comprehensive test coverage. The tests verify all main functionalities including:
 
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+- User and entity registration
+- Token minting and transfers
+- Lost pet post creation and management
+- Redemption post creation and claiming
+- Access control and permissions
+- Error handling and edge cases
